@@ -15,21 +15,24 @@ class LLMLoader():
         self.keys_path = default_keys_path if keys_path is None else keys_path
         self.api_keys = json.loads(self.keys_path.read_text())
 
+    def load_vsegpt(self, model="openai/gpt-4o", temperature = 0):
+        keys = self.api_keys["vsegpt"]
+        llm = ChatOpenAI(
+                base_url=keys["base_url"],
+                api_key=keys["key"],
+                model=model,
+                temperature=temperature
+        )
+        return llm
+
     def load_openai(self, model="gpt-4o", temperature=0, mode="vsegpt"):
         if mode == "openai":
             key = self.api_keys["openai"]["key"]
             llm = ChatOpenAI(openai_api_key=key, model=model, temperature=temperature)
             return llm
         if mode == "vsegpt":
-            keys = self.api_keys["vsegpt"]
             model_full_title = f"openai/{model}" if not model.startswith("openai/") else model
-            llm = ChatOpenAI(
-                base_url=keys["base_url"],
-                api_key=keys["key"],
-                model=model_full_title,
-                temperature=temperature
-            )
-            return llm
+            return self.load_vsegpt(model_full_title, temperature)
 
 
     def load_yandexgpt(self, model=YandexGPTModel.Pro, temperature=0):
