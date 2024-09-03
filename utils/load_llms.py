@@ -77,16 +77,16 @@ class LLMLoader():
 
         keys = self.api_keys["gigachat"]
         response = get_access_token(keys["auth"])
-        if response != 1:
+        if response != -1:
             print(response.text)
             giga_token = response.json()['access_token']
 
-        llm = GigaChat(verify_ssl_certs=False,
-                scope="GIGACHAT_API_PERS",
-                model=model,
-                access_token=giga_token,
-                temperature=temperature)
-        return llm
+            llm = GigaChat(verify_ssl_certs=False,
+                    scope="GIGACHAT_API_PERS",
+                    model=model,
+                    access_token=giga_token,
+                    temperature=temperature)
+            return llm
 
 
     def load_anthropic(self, model="anthropic/claude-3.5-sonnet", temperature=0):
