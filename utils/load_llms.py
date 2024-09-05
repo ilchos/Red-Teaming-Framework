@@ -15,7 +15,7 @@ class LLMLoader():
         self.keys_path = default_keys_path if keys_path is None else keys_path
         self.api_keys = json.loads(self.keys_path.read_text())
 
-    def load_vsegpt(self, model="openai/gpt-4o", temperature = 0):
+    def load_vsegpt(self, model="openai/gpt-4o", temperature=0):
         keys = self.api_keys["vsegpt"]
         llm = ChatOpenAI(
                 base_url=keys["base_url"],
@@ -35,12 +35,13 @@ class LLMLoader():
             return self.load_vsegpt(model_full_title, temperature)
 
 
-    def load_yandexgpt(self, model=YandexGPTModel.Pro, temperature=0):
+    def load_yandexgpt(self, model=YandexGPTModel.Pro, temperature=0, max_tokens=4000):
         keys = self.api_keys["yandex"]
         llm = YandexLLM(folder_id=keys["folder_id"],
                         api_key=keys["key"],
                         model=model,
-                        temperature=temperature
+                        temperature=temperature,
+                        max_tokens=max_tokens
         )
         return llm
 
