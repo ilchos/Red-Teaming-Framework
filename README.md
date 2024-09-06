@@ -13,3 +13,5 @@
             --verbose \
             --generations 1
     ```
+
+[garak documentation reference](https://reference.garak.ai/en/latest/garak.generators.rest.html)
