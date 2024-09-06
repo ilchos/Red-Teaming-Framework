@@ -1,0 +1,25 @@
+{
+    "rest": {
+        "RestGenerator": {
+            "name": "VSEGPT",
+            "uri": "https://api.vsegpt.ru/v1/chat/completions",
+            "method": "post",
+            "headers": {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer <YOUR_VSE_GPT_KEY>"
+            }, 
+            "req_template_json_object": {
+                "model": "<YOUR_MODEL_NAME>",
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": "$INPUT"
+                    }
+                ]
+            }, 
+            "response_json": true,
+            "response_json_field": "<как надо запарсить выход vsegpt для того чтобы получить текст в формате JSONPath>"
+        }
+    }
+}
+    
