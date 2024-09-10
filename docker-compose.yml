@@ -17,11 +17,13 @@ services:
     build: 
       dockerfile: ./docker/backend.Dockerfile
     container_name: backend
+    env_file:
+      - .env
     ports:
       - "8000:8000"
     networks:
       - app-network
-    command: poetry run python3 src/main.py
+    command: poetry run python3 src/backend/main.py
 
   frontend:
     build: 

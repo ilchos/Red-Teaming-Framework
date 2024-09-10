@@ -34,8 +34,7 @@ RUN poetry config installer.max-workers 10
 RUN poetry install --only backend
 
 RUN mkdir logs
-COPY src/backend src
-COPY ./garak.report.jsonl .
+COPY src/backend src/backend
 
 EXPOSE 8000
 
