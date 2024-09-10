@@ -2,7 +2,7 @@
 
 bombs chatbot-like AI agents
 
-(Are your agent ready for production? Let's see: we just BOMB your model)
+(Are your agent ready for production? Let's see: just BOMB your model)
 
 ---
 
@@ -27,7 +27,9 @@ Testing procedure:
 - Loading our benchmark prompt dataset
 - Evaluating process & storing the results
 - Now you can see your model's vulnerability testing results!
-  - You can compare this to another models
+  - You can compare your agent's results to another models results
 - (optional) Uploading your agent's results to public leaderboard
+
+---
 
 We hope you WILL NOT train your model on our benchmark dataset. It's only for evaluating. Thanks!
