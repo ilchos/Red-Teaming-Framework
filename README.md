@@ -1,13 +1,33 @@
 # Awesome Red-Teaming framework
 
-bombs AI models
+bombs chatbot-like AI agents
 
-(to see how it's ready for production)
+(Are your agent ready for production? Let's see: we just BOMB your model)
 
 ---
 
-draft homepage version
-
 ## Framework contents
 
-Internal testing datasets + Special vulnerablity metrics + Your Chat Agent => DeepEval => Converting & standartizing results => Vulnerablity metrics => Our Safety Leaderboard (Private or Public)
+### Benchark datasets
+
+40 high-quality entries for all-wide attacks
+
+1 prompt of our bench dataset contains 2 text parts:
+- model-breaking text part (jailbrake, encoding & etc)
+- innapropriate text part (harmful topics & etc)
+
+### Testing system
+
+We use DeepEval harm metric system
+
+Testing procedure:
+
+- Connecting YOUR agent for testing using OpenAI-like chatbot API
+- Connecting gpt-4o Judge model for metrics
+- Loading our benchmark prompt dataset
+- Evaluating process & storing the results
+- Now you can see your model's vulnerability testing results!
+  - You can compare this to another models
+- (optional) Uploading your agent's results to public leaderboard
+
+We hope you WILL NOT train your model on our benchmark dataset. It's only for evaluating. Thanks!
