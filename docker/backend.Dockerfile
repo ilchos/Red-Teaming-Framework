@@ -21,8 +21,7 @@ ENV PATH="/root/.local/bin:$PATH" \
     PIP_DISABLE_PIP_VERSION_CHECK=on \
     POETRY_VERSION="1.8.3" \
     POETRY_VIRTUALENVS_CREATE=1 \
-    POETRY_CACHE_DIR=/tmp/poetry_cache \
-    HF_INFERENCE_TOKEN="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"
+    POETRY_CACHE_DIR=/tmp/poetry_cache
 
 WORKDIR /app
 
