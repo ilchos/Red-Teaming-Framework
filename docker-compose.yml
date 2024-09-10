@@ -1,4 +1,18 @@
 services:
+  postgres:
+    image: postgres:15
+    volumes:
+      - ./data/database:/var/lib/postgresql/data
+      - ./queries/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - POSTGRES_USER=$PG_USER
+      - POSTGRES_PASSWORD=$PG_PASSWORD
+      - POSTGRES_DB=$PG_DATABASE
+    ports:
+      - $PG_PORT:$PG_PORT
+    networks:
+      - app-network
+
   backend:
     build: 
       dockerfile: ./docker/backend.Dockerfile

@@ -1348,6 +1348,23 @@ typing-extensions = ">=4.0,<5.0"
 websockets = ">=10.0,<13.0"
 
 [[package]]
+name = "gradio-leaderboard"
+version = "0.0.11"
+description = "Super fast , batteries included Leaderboard component ⚡️"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "gradio_leaderboard-0.0.11-py3-none-any.whl", hash = "sha256:6ffb7fb16dfc1ed0d9d13d4b48b24b815453c893360caeda8d178b8ea58a3c69"},
+    {file = "gradio_leaderboard-0.0.11.tar.gz", hash = "sha256:02bb9830b434d18824bf0e3ec9779f2f7ee8b223f4edf37c61fe0deeccf6582b"},
+]
+
+[package.dependencies]
+gradio = ">=4.0,<5.0"
+
+[package.extras]
+dev = ["build", "twine"]
+
+[[package]]
 name = "greenlet"
 version = "3.0.3"
 description = "Lightweight in-process concurrent programming"
@@ -3089,6 +3106,29 @@ files = [
 
 [package.extras]
 test = ["enum34", "ipaddress", "mock", "pywin32", "wmi"]
+
+[[package]]
+name = "psycopg"
+version = "3.2.1"
+description = "PostgreSQL database adapter for Python"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "psycopg-3.2.1-py3-none-any.whl", hash = "sha256:ece385fb413a37db332f97c49208b36cf030ff02b199d7635ed2fbd378724175"},
+    {file = "psycopg-3.2.1.tar.gz", hash = "sha256:dc8da6dc8729dacacda3cc2f17d2c9397a70a66cf0d2b69c91065d60d5f00cb7"},
+]
+
+[package.dependencies]
+typing-extensions = ">=4.4"
+tzdata = {version = "*", markers = "sys_platform == \"win32\""}
+
+[package.extras]
+binary = ["psycopg-binary (==3.2.1)"]
+c = ["psycopg-c (==3.2.1)"]
+dev = ["ast-comments (>=1.1.2)", "black (>=24.1.0)", "codespell (>=2.2)", "dnspython (>=2.1)", "flake8 (>=4.0)", "mypy (>=1.6)", "types-setuptools (>=57.4)", "wheel (>=0.37)"]
+docs = ["Sphinx (>=5.0)", "furo (==2022.6.21)", "sphinx-autobuild (>=2021.3.14)", "sphinx-autodoc-typehints (>=1.12)"]
+pool = ["psycopg-pool"]
+test = ["anyio (>=4.0)", "mypy (>=1.6)", "pproxy (>=2.7)", "pytest (>=6.2.5)", "pytest-cov (>=3.0)", "pytest-randomly (>=3.5)"]
 
 [[package]]
 name = "pyarrow"
@@ -5360,4 +5400,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.9"
-content-hash = "5df78f1087e90599efeb310a20618e031d8133247fa6b3e63c623f58b4dbc850"
+content-hash = "567bbd4bf951214a07edeb01dd3545e5e509ebbfcff9106ebdfd9e9e0235448a"

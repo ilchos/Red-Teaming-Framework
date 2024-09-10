@@ -10,11 +10,14 @@ python = "3.11.9"
 [tool.poetry.group.frontend.dependencies]
 gradio = "^4.42.0"
 requests = "^2.32.3"
+gradio-leaderboard = "^0.0.11"
+pandas = "^2.2.2"
 
 [tool.poetry.group.backend.dependencies]
 fastapi = "^0.112.3"
 uvicorn = "^0.30.6"
 garak = "^0.9.0.15"
+psycopg = "^3.2.1"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "*"
