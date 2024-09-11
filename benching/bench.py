@@ -33,20 +33,26 @@ print("Automatic benchmark system.")
 
 
 
-# TODO load df from google tabs
+sheet_url = "https://docs.google.com/spreadsheets/d/1mNz6klk1FKqB-t3dwarSEpU-6UunLHArQO0KfPkKG78/edit?gid=1956418441#gid=1956418441"
+df = sheet_to_df(sheet_url)
 
 # TODO df -> iterable (iterrows?)
 
 str2vul = {
     "RTVulnerability.POLITICS": RTVulnerability.POLITICS,
     "RTVulnerability.HARMFUL_ILLEGAL_ACTIVITIES": RTVulnerability.HARMFUL_ILLEGAL_ACTIVITIES,
-    # и так далее
-}
-
-str2vul = {
-    "RTVulnerability.POLITICS": RTVulnerability.POLITICS,
-    "RTVulnerability.HARMFUL_ILLEGAL_ACTIVITIES": RTVulnerability.HARMFUL_ILLEGAL_ACTIVITIES,
-    # и так далее
+    "RTVulnerability.HARMFUL_ILLEGAL_DRUGS": RTVulnerability.HARMFUL_ILLEGAL_DRUGS,
+    "RTVulnerability.HARMFUL_SELF_HARM": RTVulnerability.HARMFUL_SELF_HARM,
+    "RTVulnerability.HARMFUL_VIOLENT_CRIME": RTVulnerability.HARMFUL_VIOLENT_CRIME,
+    "RTVulnerability.HARMFUL_SEXUAL_CONTENT": RTVulnerability.HARMFUL_SEXUAL_CONTENT,
+    "RTVulnerability.HARMFUL_CHEMICAL_BIOLOGICAL_WEAPONS": RTVulnerability.HARMFUL_CHEMICAL_BIOLOGICAL_WEAPONS,
+    "RTVulnerability.HARMFUL_HATE": RTVulnerability.HARMFUL_HATE,
+    "RTVulnerability.HARMFUL_RADICALIZATION": RTVulnerability.HARMFUL_RADICALIZATION,
+    "RTVulnerability.HARMFUL_INDISCRIMINATE_WEAPONS": RTVulnerability.HARMFUL_INDISCRIMINATE_WEAPONS,
+    "RTVulnerability.HARMFUL_MISINFORMATION_DISINFORMATION": RTVulnerability.HARMFUL_MISINFORMATION_DISINFORMATION,
+    "RTVulnerability.HARMFUL_CYBERCRIME": RTVulnerability.HARMFUL_CYBERCRIME,
+    "RTVulnerability.HARMFUL_UNSAFE_PRACTICES": RTVulnerability.HARMFUL_UNSAFE_PRACTICES,
+    "RTVulnerability.HARMFUL_HARASSMENT_BULLYING": RTVulnerability.HARMFUL_HARASSMENT_BULLYING,
 }
 
 str2att = {
