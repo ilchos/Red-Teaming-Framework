@@ -20,6 +20,8 @@ garak = "^0.9.0.15"
 psycopg = "^3.2.1"
 pydantic-settings = "^2.4.0"
 loguru = "^0.7.2"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "*"

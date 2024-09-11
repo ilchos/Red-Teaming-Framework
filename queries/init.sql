@@ -17,3 +17,10 @@ INSERT INTO leaderboard_competitors
     ('mistral', 10, 5, 0.5, FALSE, 'Encoding', 'DeepEval_cat_2', 'garak_cat_2'),
     ('gemini', 10, 9, 0.9, FALSE, 'Adversarial Suffix', 'DeepEval_cat_3', 'garak_cat_10'),
     ('gpt-3.5', 10, 9, 0.9, TRUE, 'Jailbrake', 'DeepEval_cat_15', 'garak_cat_21');
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    full_name VARCHAR(255)
+);

@@ -1,6 +1,7 @@
 from typing import Union
 
 from loguru import logger
+from passlib.context import CryptContext
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -39,3 +40,5 @@ logger.add(
     compression=settings.logger_settings.log_compression,
 )
 logger.info(settings.model_dump_json(indent=4))
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

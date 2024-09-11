@@ -1,6 +1,7 @@
 import os
 
-from fastapi import APIRouter
+from authorization.jwt_bearer import JWTBearer
+from fastapi import APIRouter, Depends
 from garak_utils import (
     create_rest_settings_file,
     process_garak_hitlog,
@@ -13,7 +14,7 @@ from schemas import TestRequest, TestResponse
 router = APIRouter()
 
 
-@router.post("/test", response_model=TestResponse)
+@router.post("/test", response_model=TestResponse, dependencies=[Depends(JWTBearer())])
 async def test_endpoint(request: TestRequest):
     create_rest_settings_file(request.model_name, "rest_settings_simple.json")
     current_path = os.getcwd()

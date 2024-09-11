@@ -1,21 +1,17 @@
+from authorization.jwt_bearer import JWTBearer
 from fastapi import APIRouter, Depends
 from loguru import logger
-from pg_client import PostgresClient
+from pg_client import PostgresClient, get_postgres_client
 from schemas import LeaderboardCompetitorsResponse
-from settings import Settings
 
 router = APIRouter()
 
 
-def get_settings():
-    return Settings()
-
-
-def get_postgres_client(settings: Settings = Depends(get_settings)):
-    return PostgresClient(settings=settings.postgres_settings)
-
-
-@router.get("/leaderboard_competitors", response_model=LeaderboardCompetitorsResponse)
+@router.get(
+    "/leaderboard_competitors",
+    response_model=LeaderboardCompetitorsResponse,
+    dependencies=[Depends(JWTBearer())],
+)
 async def get_leaderboard_competitors(
     postgres_client: PostgresClient = Depends(get_postgres_client),
 ):

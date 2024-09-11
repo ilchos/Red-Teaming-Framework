@@ -5,9 +5,21 @@ class BackendClient:
     def __init__(self, base_url):
         self.base_url = base_url
 
+        self.headers = None
+        token = self.post_data(
+            "/token",
+            {
+                "username": "kduvakin",
+                "password": "123",
+            },
+        )["access_token"]
+        self.headers = {
+            "Authorization": f"Bearer {token}",
+        }
+
     def fetch_data(self, endpoint):
         url = f"{self.base_url}/{endpoint}"
-        response = requests.get(url)
+        response = requests.get(url, headers=self.headers)
         if response.status_code == 200:
             return response.json().get("result", [])
         else:
@@ -16,7 +28,7 @@ class BackendClient:
 
     def post_data(self, endpoint, data):
         url = f"{self.base_url}/{endpoint}"
-        response = requests.post(url, json=data)
+        response = requests.post(url, json=data, headers=self.headers)
         if response.status_code == 200:
             return response.json()
         else:
@@ -33,7 +45,9 @@ class BackendClient:
         return self.fetch_data("leaderboard_competitors")
 
     def fetch_leaderboard_categories_tree(self):
-        response = requests.get(f"{self.base_url}/leaderboard_categories")
+        response = requests.get(
+            f"{self.base_url}/leaderboard_categories", headers=self.headers
+        )
         if response.status_code == 200:
             return response.json()
         else:

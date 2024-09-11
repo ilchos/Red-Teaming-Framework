@@ -1,11 +1,16 @@
-from fastapi import APIRouter
+from authorization.jwt_bearer import JWTBearer
+from fastapi import APIRouter, Depends
 from garak_utils import run_garak_command
 from schemas import GarakListProbesResponse
 
 router = APIRouter()
 
 
-@router.get("/garak_list_probes", response_model=GarakListProbesResponse)
+@router.get(
+    "/garak_list_probes",
+    response_model=GarakListProbesResponse,
+    dependencies=[Depends(JWTBearer())],
+)
 async def get_garak_list_probes():
     command = "garak --list_probes"
     result = run_garak_command(command)

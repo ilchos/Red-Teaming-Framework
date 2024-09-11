@@ -2,6 +2,7 @@ import gradio as gr
 import pandas as pd
 from backend_client import BackendClient
 from leaderboard_utils import get_categories_mapping, update_categories, update_table
+from submit_utils import send_file_to_backend
 
 
 def create_interface():
@@ -145,6 +146,21 @@ def create_interface():
                             ],
                             leaderboard_table,
                         )
+
+            with gr.TabItem("Sumbit"):
+                with gr.Blocks():
+                    with gr.Row():
+                        with gr.Accordion("Automated testing"):
+                            pass
+
+                    with gr.Row():
+                        with gr.Accordion("Manual testing"):
+                            gr.Interface(
+                                fn=send_file_to_backend,
+                                inputs=gr.File(label="Загрузите файл"),
+                                outputs="text",
+                                description="Загрузите файл и посмотрите результат.",
+                            )
 
     return iface
 

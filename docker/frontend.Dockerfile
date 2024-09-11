@@ -21,7 +21,7 @@ RUN poetry config installer.max-workers 10
 RUN poetry install --only frontend
 
 RUN mkdir logs
-COPY src/frontend src
+COPY src/frontend src/frontend
 
 EXPOSE 7860
 

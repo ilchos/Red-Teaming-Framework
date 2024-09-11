@@ -35,7 +35,7 @@ services:
       - backend
     networks:
       - app-network
-    command: poetry run python3 src/main.py
+    command: poetry run python3 src/frontend/main.py
 
 networks:
   app-network:
