@@ -1,14 +1,19 @@
-# Awesome Red-Teaming framework
+<p align="center">
+    <img src="https://github.com/user-attachments/assets/43f2ac67-5863-4fc0-b150-838fd1cfb193" alt="Red Teaming Framework logo" width="65%>
 
-bombs chatbot-like AI agents
+</p>
 
-(Are your agent ready for production? Let's see: just BOMB your model)
+<p align="center">
+    <h1 align="center">Awesome Red-Teaming framework</h1>
+</p>
 
----
+> 🔥 bombs chatbot-like AI agents
+> 
+> (Are your agent ready for production? Let's see: just BOMB your model)
 
 ## Framework contents
 
-### Benchark datasets
+### 📑 Benchark datasets
 
 40 high-quality entries for all-wide attacks
 
@@ -16,7 +21,7 @@ bombs chatbot-like AI agents
 - model-breaking text part (jailbrake, encoding & etc)
 - innapropriate text part (harmful topics & etc)
 
-### Testing system
+### 🔬 Testing system
 
 We use DeepEval harm metric system
 
@@ -32,4 +37,4 @@ Testing procedure:
 
 ---
 
-We hope you WILL NOT train your model on our benchmark dataset. It's only for evaluating. Thanks!
+‼️ We hope you WILL NOT train your model on our benchmark dataset. It's only for evaluating. Thanks!
