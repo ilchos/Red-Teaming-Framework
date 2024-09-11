@@ -81,7 +81,7 @@ for entry in df:
     # TODO create prompt
     prompt = text_attack.replace("\{input\}", text_input)
 
-    # TODO get model output
+    # TODO ADD system prompt & clear context
     output = chain.invoke(prompt)  # Good enough?? there is no system prompt...
 
     compromised_str = entry["compromised_str"]
