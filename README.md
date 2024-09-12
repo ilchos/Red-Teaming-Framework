@@ -11,6 +11,10 @@
 > 
 > (Are your agent ready for production? Let's see: just BOMB your model)
 
+## 🚀 Getting started
+
+Follow this [link](https://github.com/ilchos/Red-Teaming-Framework/blob/master/benching/benchmark_outs.ipynb) to access a step-by-step guide on how to check your AI agent.
+
 ## Framework contents
 
 ### 📑 Benchark datasets
