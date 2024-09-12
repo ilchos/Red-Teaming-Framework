@@ -22,7 +22,7 @@ class LoggerSettings(BaseSettings):
 class Settings(BaseSettings):
     logger_settings: LoggerSettings = LoggerSettings()
     backend_settings: BackendAuthSettings = BackendAuthSettings()
-    backend_url: str = "http://backend:8000"
+    backend_url: str
 
 
 settings = Settings()

@@ -181,6 +181,19 @@ def initialize_leaderboard(
         leaderboard_df_raw = pd.DataFrame(leaderboard_competitors).sort_values(
             "score", ascending=False
         )
+        cat_columns = leaderboard_df_raw["vul_deepeval"].unique()
+
+        d = {
+            c: c.replace("RTVulnerability.", "")
+            .replace("HARMFUL_", "")
+            .replace("_", " ")
+            .lower()
+            for c in cat_columns
+        }
+        leaderboard_df_raw["vul_deepeval"] = leaderboard_df_raw["vul_deepeval"].replace(
+            d
+        )
+
         high2low, low2high = get_categories_mapping(leaderboard_df_raw)
         return leaderboard_df_raw, high2low, low2high
     except Exception as e:

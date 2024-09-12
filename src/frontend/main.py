@@ -129,8 +129,8 @@ def create_interface():
                 backend_client
             )
             result = (
-                gr.update(choices=list(high2low.keys())),
-                gr.update(choices=list(low2high.keys())),
+                gr.update(choices=list(high2low.keys()), value=list(high2low.keys())),
+                gr.update(choices=list(low2high.keys()), value=list(low2high.keys())),
                 gr.update(value=leaderboard_df_raw),
                 gr.update(value=calculate_leaderboard(leaderboard_df_raw)),
             )
