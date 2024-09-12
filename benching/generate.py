@@ -10,34 +10,25 @@ sys.path.append(os.path.abspath("../"))
 from utils.load_config import load_api_keys
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
-from langchain.callbacks import tracing_v2_enabled
-from deepeval import evaluate
-from deepeval.metrics import HallucinationMetric
-from deepeval.test_case import LLMTestCase
-from deepeval.metrics import ToxicityMetric
-from deepeval.red_team import RedTeamer, RTAdversarialAttack, RTVulnerability
 
 from utils.load_llms import LLMLoader
 from utils.output import get_model_title
-from models import LangchainModelEval
+from utils.deepeval.models import LangchainModelEval
 
-api_keys = load_api_keys()
-
-loader = LLMLoader()
-llm = loader.load_vsegpt("mistralai/mistral-7b-instruct", temperature=0.3)
-
-chain = llm | StrOutputParser()
+# api_keys = load_api_keys()
+# loader = LLMLoader()
+# llm = loader.load_vsegpt("mistralai/mistral-7b-instruct", temperature=0.3)
 
 
-def generate(system: str, prompt: str) -> str:
+def generate(llm, system_prompt: str, user_input: str) -> str:
     prompt_template = ChatPromptTemplate.from_messages([
         ("system", "{system_prompt}"),
         ("user", "{user_input}")
     ])
 
     prompt_params = dict(
-        system_prompt=system,
-        user_input=prompt
+        system_prompt=system_prompt,
+        user_input=user_input
     )
 
     chain = prompt_template | llm | StrOutputParser()
