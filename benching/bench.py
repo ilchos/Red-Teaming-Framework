@@ -110,10 +110,7 @@ for internal_index, entry in df.iterrows():
     ]
 
     # get eval
-
-    with tracing_v2_enabled():
-        result = evaluate(test_cases, [metric])
-    result = result[0].metrics_data
+    result = evaluate(test_cases, [metric])[0].metrics_data
     result_dict = {"id": entry_id,
                     "vul_deepeval": str_vul,
                     "type_general": attack_type,
