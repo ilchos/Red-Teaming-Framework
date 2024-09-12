@@ -12,23 +12,21 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.dependencies]
 python = "^3.10"
+ipykernel = "^6.29.5"
 
 [tool.poetry.group.v1.dependencies]
 langchain = "0.2.1"
 pandas = "^2.2.2"
-ipykernel = "^6.29.5"
 
 [tool.poetry.group.v2.dependencies]
 langchain = "0.2.1"
 pandas = "^2.2.2"
-ipykernel = "^6.29.5"
 langchain-community = "0.2.1"
 yandex-chain = "^0.0.9"
 
 [tool.poetry.group.v3.dependencies]
 langchain = "0.2.1"
-deepeval = "^1.1.7"
-langchain-community = "0.2.1"
 pandas = "^2.2.2"
-ipykernel = "^6.29.5"
+langchain-community = "0.2.1"
 yandex-chain = "^0.0.9"
+deepeval = "^1.1.7"
