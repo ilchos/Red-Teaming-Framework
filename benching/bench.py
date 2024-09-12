@@ -1,6 +1,8 @@
 import pandas as pd
-import sys, os
-from utils.load_config import load_api_keys
+import sys
+import os
+sys.path.append(os.path.abspath("../"))
+
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain.callbacks import tracing_v2_enabled
@@ -10,14 +12,13 @@ from deepeval.test_case import LLMTestCase
 from deepeval.metrics import ToxicityMetric
 from deepeval.red_team import RedTeamer, RTAdversarialAttack, RTVulnerability
 
+from benching import generate
+from utils.load_config import load_api_keys
 from utils.load_llms import LLMLoader
 from utils.output import get_model_title
 from models import LangchainModelEval
-sys.path.append(os.path.abspath("../"))
+from benching.data import sheets_to_df
 
-# Если не нужен tracing, то эту клетку можно пропустить
-
-from utils.load_config import load_api_keys
 api_keys = load_api_keys()
 os.environ["LANGCHAIN_API_KEY"] = api_keys["langchain"]["key"]
 os.environ["LANGCHAIN_PROJECT"] = "default"
@@ -34,7 +35,7 @@ print("Automatic benchmark system.")
 
 
 sheet_url = "https://docs.google.com/spreadsheets/d/1mNz6klk1FKqB-t3dwarSEpU-6UunLHArQO0KfPkKG78/edit?gid=1956418441#gid=1956418441"
-df = sheet_to_df(sheet_url)
+df = sheets_to_df(sheet_url)
 
 # TODO df -> iterable (iterrows?)
 
@@ -62,7 +63,10 @@ str2att = {
     "Encoding": RTAdversarialAttack.BASE64,
 }
 
-for entry in df:
+for entry in df.iterrows():
+    if entry["text"].strip() == "":
+        print("skipping empty entry id =",entry["id"])
+        continue
     lang = entry["lang"]
     ############################
     ### DEFINE SYSTEM PROMPT ###
@@ -86,12 +90,16 @@ for entry in df:
     # TODO get from entry using eval(attack_string)
 
     # INITIALIZE EVAL CLASSES
-
     
     text_attack = entry["text"]
     text_input = entry["user_input"]
     # TODO create prompt
-    prompt = text_attack.replace("\{input\}", text_input)
+    prompt = text_attack
+    if text_attack.strip() != "":
+        if text_attack.find("{input}") != -1:
+            prompt += "\n" + text_input
+        else:
+            prompt = text_attack.replace("{input}", " " + text_input)
     
     output = generate(target_system_prompt, prompt)
 
