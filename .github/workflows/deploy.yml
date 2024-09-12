@@ -27,14 +27,16 @@ jobs:
         docker save backend:latest -o backend.tar
 
     - name: Deploy to server via SSH
-      uses: appleboy/ssh-action@master
+      uses: appleboy/scp-action@master
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script: |
-          # Загрузка первого образа на сервер
-          scp frontend.tar ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USERNAME }}/frontend.tar
+        source: backend.tar
+        target: /home/${{ secrets.SSH_USERNAME }}/
+        # script: |
+        #   # Загрузка первого образа на сервер
+        #   scp frontend.tar ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USERNAME }}/frontend.tar
 
-          # Загрузка второго образа на сервер
-          scp backend.tar ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USERNAME }}/backend.tar
+        #   # Загрузка второго образа на сервер
+        #   scp backend.tar ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USERNAME }}/backend.tar
