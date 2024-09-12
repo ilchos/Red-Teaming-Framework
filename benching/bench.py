@@ -37,6 +37,8 @@ print("Automatic benchmark system starting.")
 print("Loading dataset from google sheets...")
 sheet_url = "https://docs.google.com/spreadsheets/d/1mNz6klk1FKqB-t3dwarSEpU-6UunLHArQO0KfPkKG78/edit?gid=1956418441#gid=1956418441"
 df = sheet_to_df(sheet_url)
+variuos_columns = ['id', 'text', 'lang', 'type_general', 'judge_input', 'vul_deepeval']
+df = df.dropna(subset=variuos_columns)
 print("Dataset loaded. Testing")
 
 # TODO load df outputs
@@ -46,9 +48,6 @@ with open(os.path.abspath("../outputs/agent_outputs.json"), "r", encoding='utf-8
 # TODO df -> iterable (iterrows?)
 all_results = []
 for internal_index, entry in df.iterrows():
-    if entry["text"].strip() == "":
-        print("skipping empty entry id =", entry["id"])
-        continue
     lang = entry["lang"]
     entry_id = entry["id"]
     attack_type = entry["type_general"]
