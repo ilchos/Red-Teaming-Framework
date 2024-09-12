@@ -1,0 +1,40 @@
+name: Deploy Docker Images
+
+on:
+  push:
+    branches:
+      - ai_safety_leaderboard  # Запускать действие при push в ветку ai_safety_leaderboard
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Build Frontend Docker image
+      run: |
+        docker build -t frontend:latest -f docker/frontend.Dockerfile .
+        docker save frontend:latest -o frontend.tar
+
+    - name: Build Backend Docker image
+      run: |
+        docker build -t backend:latest -f docker/backend.Dockerfile .
+        docker save backend:latest -o backend.tar
+
+    - name: Deploy to server via SSH
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        password: ${{ secrets.SSH_PASSWORD }}
+        script: |
+          # Загрузка первого образа на сервер
+          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa frontend.tar ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USERNAME }}/frontend.tar
+
+          # Загрузка второго образа на сервер
+          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa backend.tar ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USERNAME }}/backend.tar
