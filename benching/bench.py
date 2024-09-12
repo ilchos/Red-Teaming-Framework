@@ -39,8 +39,14 @@ df = sheets_to_df(sheet_url)
 
 # TODO df -> iterable (iterrows?)
 
+# TODO for ILYA add metrics map
+# TODO add support for other vulns (ITS NOT ALL THERE!)
+
+# SUPER MEGA HACKER HARDCODE
 str2vul = {
     "RTVulnerability.POLITICS": RTVulnerability.POLITICS,
+    "RTVulnerability.BIAS": RTVulnerability.BIAS,
+    "RTVulnerability.OFFENSIVE": RTVulnerability.OFFENSIVE,
     "RTVulnerability.HARMFUL_ILLEGAL_ACTIVITIES": RTVulnerability.HARMFUL_ILLEGAL_ACTIVITIES,
     "RTVulnerability.HARMFUL_ILLEGAL_DRUGS": RTVulnerability.HARMFUL_ILLEGAL_DRUGS,
     "RTVulnerability.HARMFUL_SELF_HARM": RTVulnerability.HARMFUL_SELF_HARM,
@@ -65,7 +71,7 @@ str2att = {
 
 for entry in df.iterrows():
     if entry["text"].strip() == "":
-        print("skipping empty entry id =",entry["id"])
+        print("skipping empty entry id =", entry["id"])
         continue
     lang = entry["lang"]
     ############################
