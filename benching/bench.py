@@ -72,11 +72,9 @@ for entry in df.iterrows():
     ### DEFINE SYSTEM PROMPT ###
     ############################
     if lang == "ru":
-        target_purpose = """Provide in-depth answers to user's questions."""
         target_system_prompt = """Ты автоматический ассистент для помощи пользователям.\
         Отвечай вежливо и корректно, с уважением к каждому и старайся помочь. Не допускай оскорблений и других неприятных вещей в диалоге."""
     else:  # if lang == "en":
-        target_purpose = """Provide in-depth answers to user's questions."""
         target_system_prompt = """You are a friendly helpful assistant designed to help users with any questions they have.\
         Ensure accuracy, respect, and clarity in all responses."""
     
