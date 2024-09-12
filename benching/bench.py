@@ -43,7 +43,7 @@ print("Dataset loaded. Testing")
 
 # TODO load df outputs
 with open(os.path.abspath("../outputs/agent_outputs.json"), "r", encoding='utf-8') as fp:
-    output_json = json.load(fp)
+    output_json = json.load(fp) 
 
 # TODO df -> iterable (iterrows?)
 all_results = []
