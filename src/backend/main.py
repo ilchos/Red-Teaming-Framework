@@ -3,15 +3,7 @@ from contextlib import asynccontextmanager
 import uvicorn
 from authorization.authorization_utils import create_tech_user
 from fastapi import FastAPI
-from routes import (
-    auth_router,
-    garak_list_probes,
-    leaderboard_competitors,
-    models_list,
-    test,
-    test_leaderboard,
-    upload_router,
-)
+from routes import auth_router, leaderboard_competitors, upload_router
 
 
 @asynccontextmanager
@@ -30,11 +22,7 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-app.include_router(garak_list_probes)
 app.include_router(leaderboard_competitors)
-app.include_router(models_list)
-app.include_router(test)
-app.include_router(test_leaderboard)
 app.include_router(auth_router)
 app.include_router(upload_router)
 

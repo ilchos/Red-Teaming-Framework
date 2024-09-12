@@ -31,7 +31,7 @@ jobs:
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
-        password: ${{ secrets.SSH_PASSWORD }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
           # Загрузка первого образа на сервер
           scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa frontend.tar ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USERNAME }}/frontend.tar

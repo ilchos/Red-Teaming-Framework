@@ -1,7 +1,6 @@
 import gradio as gr
-import pandas as pd
 from backend_client import BackendClient
-from leaderboard_utils import get_categories_mapping, update_categories, update_table
+from leaderboard_utils import initialize_leaderboard, update_categories, update_table
 
 leaderboard_df_raw, high2low, low2high, leaderboard_table, leaderboard_table_raw = (
     None,
@@ -10,15 +9,6 @@ leaderboard_df_raw, high2low, low2high, leaderboard_table, leaderboard_table_raw
     None,
     None,
 )
-
-
-def initialize_leaderboard(backend_client):
-    leaderboard_competitors = backend_client.fetch_leaderboard_competitors()
-    leaderboard_df_raw = pd.DataFrame(leaderboard_competitors).sort_values(
-        "score", ascending=False
-    )
-    high2low, low2high = get_categories_mapping(leaderboard_df_raw)
-    return leaderboard_df_raw, high2low, low2high
 
 
 def create_interface():

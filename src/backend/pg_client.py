@@ -16,10 +16,6 @@ class PostgresClient:
             **self.settings.model_dump(),
         )
 
-    def disconnect(self):
-        if self.conn:
-            self.conn.close()
-
     def execute_query(self, query: str, params=None):
         if not self.conn:
             self.connect()
@@ -75,13 +71,6 @@ class PostgresClient:
             raise exc
 
         self.conn.commit()
-
-    def __enter__(self):
-        self.connect()
-        return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self.disconnect()
 
 
 def get_settings():
