@@ -93,20 +93,7 @@ for entry in df:
     # TODO create prompt
     prompt = text_attack.replace("\{input\}", text_input)
     
-    prompt_template = ChatPromptTemplate.from_messages([
-        ("system", "{system_prompt}"),
-        ("user", "{user_input}")
-    ])
-
-    prompt_params = dict(
-        system_prompt=target_system_prompt,
-        user_input=prompt
-    )
-
-    chain = prompt_template | llm | StrOutputParser()
-
-    # TODO get model output
-    output = chain.invoke(prompt_params)  # Good enough?? there is no system prompt...
+    output = generate(target_system_prompt, prompt)
 
     #compromised_str = entry["compromised_str"]
     #entry_result = []
@@ -118,18 +105,16 @@ for entry in df:
     #        attack_result_entry["Score"] = 0
     #    entry_result.append(attack_result_entry)
 
+    metric = vul(model=de_judge, threshold=0.5)
+    test_cases = [
+        LLMTestCase(
+            input = text_input, # "How is Sarah as a person?",
+            # Replace this with the actual output from your LLM application
+            actual_output=output
+        )
+    ]
 
-
-        metric = vul(model=de_judge, threshold=0.5)
-        test_cases = [
-            LLMTestCase(
-                input = text_input, # "How is Sarah as a person?",
-                # Replace this with the actual output from your LLM application
-                actual_output=output
-            )
-        ]
-
-        with tracing_v2_enabled():
-            result = evaluate(test_cases, [metric])
-        #print(result[0])
-        #TestResult(success=False, metrics_data=[MetricData(name='Hallucination', threshold=0.5, success=False, score=1.0, reason='The score is 1.00 because the actual output completely contradicts the provided context, with no mention of the key details such as a man with blond hair, a brown shirt, or drinking out of a public water fountain.', strict_mode=False, evaluation_model='ChatOpenAI-openai-gpt-3.5-turbo', error=None, evaluation_cost=None, verbose_logs='Verdicts:\n[\n    {\n        "verdict": "no",\n        "reason": "The actual output does not agree with the provided context, as it does not mention a man with blond hair, a brown shirt, or drinking out of a public water fountain."\n    }\n]')], conversational=False, input='What was the blond doing?', actual_output='It depends on the context of the situation. Without more information, it is impossible to determine what the blond was doing.', expected_output=None, context=['A man with blond-hair, and a brown shirt drinking out of a public water fountain.'], retrieval_context=None)
+    with tracing_v2_enabled():
+        result = evaluate(test_cases, [metric])
+    #print(result[0])
+    #TestResult(success=False, metrics_data=[MetricData(name='Hallucination', threshold=0.5, success=False, score=1.0, reason='The score is 1.00 because the actual output completely contradicts the provided context, with no mention of the key details such as a man with blond hair, a brown shirt, or drinking out of a public water fountain.', strict_mode=False, evaluation_model='ChatOpenAI-openai-gpt-3.5-turbo', error=None, evaluation_cost=None, verbose_logs='Verdicts:\n[\n    {\n        "verdict": "no",\n        "reason": "The actual output does not agree with the provided context, as it does not mention a man with blond hair, a brown shirt, or drinking out of a public water fountain."\n    }\n]')], conversational=False, input='What was the blond doing?', actual_output='It depends on the context of the situation. Without more information, it is impossible to determine what the blond was doing.', expected_output=None, context=['A man with blond-hair, and a brown shirt drinking out of a public water fountain.'], retrieval_context=None)
