@@ -46,6 +46,7 @@ with open(os.path.abspath("../outputs/agent_outputs.json"), "r", encoding='utf-8
 # TODO df -> iterable (iterrows?)
 all_results = []
 for internal_index, entry in df.iterrows():
+    entry = dict(entry)
     lang = entry["lang"]
     entry_id = entry["id"]
     attack_type = entry["type_general"]
