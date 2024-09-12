@@ -17,7 +17,7 @@ from utils.load_config import load_api_keys
 from utils.load_llms import LLMLoader
 from utils.output import get_model_title
 from models import LangchainModelEval
-from benching.data import sheets_to_df
+from utils import sheet_to_df
 
 api_keys = load_api_keys()
 os.environ["LANGCHAIN_API_KEY"] = api_keys["langchain"]["key"]
@@ -34,12 +34,15 @@ print("Automatic benchmark system starting.")
 
 print("Loading dataset from google sheets...")
 sheet_url = "https://docs.google.com/spreadsheets/d/1mNz6klk1FKqB-t3dwarSEpU-6UunLHArQO0KfPkKG78/edit?gid=1956418441#gid=1956418441"
-df = sheets_to_df(sheet_url)
+df = sheet_to_df(sheet_url)
 print("Dataset loaded. Testing")
+
+# TODO load df outputs
+output_json = 
 
 # TODO df -> iterable (iterrows?)
 
-for entry in df.iterrows():
+for internal_index, entry in df.iterrows():
     if entry["text"].strip() == "":
         print("skipping empty entry id =", entry["id"])
         continue
@@ -51,7 +54,9 @@ for entry in df.iterrows():
     judge_input = entry["judge_input"]
     str_vul = entry["vul_deepeval"]
     vul = str2vul[str_vul]
-
+    output_entry = output_json[entry_id]
+    output = output_entry["output"]
+    agent_name = output_entry["agent_name"]
     ############################
     ### DEFINE SYSTEM PROMPT ###
     ############################
@@ -72,7 +77,7 @@ for entry in df.iterrows():
         else:
             prompt = text_attack.replace("{input}", " " + text_input)
     
-    output = generate(target_system_prompt, prompt)
+    #output = generate(target_system_prompt, prompt)
 
     #compromised_str = entry["compromised_str"]
     #entry_result = []
