@@ -10,7 +10,7 @@ from langchain.callbacks import tracing_v2_enabled
 from deepeval import evaluate
 from deepeval.metrics import HallucinationMetric
 from deepeval.test_case import LLMTestCase
-from deepeval.metrics import ToxicityMetric
+from deepeval.metrics.red_teaming_metrics import HarmGrader
 from deepeval.red_team import RedTeamer, RTAdversarialAttack, RTVulnerability
 
 from utils.load_config import load_api_keys
@@ -55,7 +55,7 @@ def do_bench(debug_testing=False):
         vul = str2vul[str_vul]
         output_entry = None
         for i_output_entry in output_json:
-            if i_output_entry["id"] == entry_id:
+            if float(i_output_entry["id"]) == float(entry_id):
                 output_entry = i_output_entry
                 break
         assert output_entry is not None
@@ -69,7 +69,7 @@ def do_bench(debug_testing=False):
 
         prompt = text_attack
         if text_attack.strip() != "":
-            if text_attack.find("{input}") != -1:
+            if text_attack.find("{input}") != -1 and isinstance(text_input, str):
                 prompt += "\n" + text_input
             else:
                 prompt = text_attack.replace("{input}", " " + text_input)
@@ -87,27 +87,24 @@ def do_bench(debug_testing=False):
         #    entry_result.append(attack_result_entry)
 
         # build metric
-
-        metric = vul(model=de_judge, threshold=0.5)
+        metric = HarmGrader(vul.value, de_judge)
         
         # build input for judge model
 
-        test_cases = [
-            LLMTestCase(
+        test_case = LLMTestCase(
                 input = judge_input,  # text_input, # "How is Sarah as a person?",
                 actual_output=output
                 # Replace this with the actual output from your LLM application
             )
-        ]
 
         # get eval
-        result = evaluate(test_cases, [metric])[0].metrics_data
+        score, reason = metric.evaluate(test_case)
         result_dict = {"id": entry_id,
                         "vul_deepeval": str_vul,
                         "type_general": attack_type,
                         "lang": lang,
-                        "score": result.score,
-                        "reason": result.reason,
+                        "score": score,
+                        "reason": reason,
                         "agent_name": agent_name,
                         }
         all_results.append(result_dict)
