@@ -1,3 +1,5 @@
 __pycache__
 .venv
 poetry.lock
+outputs/agent_outputs.json
+outputs/agent_restlts.json

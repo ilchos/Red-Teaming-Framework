@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 def sheet_to_df(url):
     # Extract the sheet ID from the URL
     sheet_id = url.split('/')[5]
@@ -13,9 +14,6 @@ def sheet_to_df(url):
     return df
 
 
-
-
-
 def sheet_dataset_prepare(df_name="aws/en"):
     df2url = {
         "aws/en": "https://docs.google.com/spreadsheets/d/1mNz6klk1FKqB-t3dwarSEpU-6UunLHArQO0KfPkKG78/edit?gid=1956418441#gid=1956418441",
@@ -25,7 +23,7 @@ def sheet_dataset_prepare(df_name="aws/en"):
 
     df = sheet_to_df(df2url[df_name])
     df = df.dropna(subset=variuos_columns)
-    
+
     return df
 
 # Usage
