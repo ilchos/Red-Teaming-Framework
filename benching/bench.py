@@ -18,7 +18,7 @@ from utils.load_config import load_api_keys
 from utils.load_llms import LLMLoader
 from utils.output import get_model_title
 from models import LangchainModelEval
-from utils import sheet_to_df
+from utils import sheet_dataset_prepare
 
 
 api_keys = load_api_keys()
@@ -36,9 +36,7 @@ print("Automatic benchmark system starting.")
 
 print("Loading dataset from google sheets...")
 sheet_url = "https://docs.google.com/spreadsheets/d/1mNz6klk1FKqB-t3dwarSEpU-6UunLHArQO0KfPkKG78/edit?gid=1956418441#gid=1956418441"
-df = sheet_to_df(sheet_url)
-variuos_columns = ['id', 'text', 'lang', 'type_general', 'judge_input', 'vul_deepeval']
-df = df.dropna(subset=variuos_columns)
+df = sheet_dataset_prepare(sheet_url)
 print("Dataset loaded. Testing")
 
 # TODO load df outputs
