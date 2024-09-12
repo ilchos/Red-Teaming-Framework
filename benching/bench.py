@@ -24,7 +24,7 @@ def do_bench(debug_testing=False):
     loader = LLMLoader()
     #llm = loader.load_vsegpt("mistralai/mistral-7b-instruct", temperature=0.3)
     #de_llm = LangchainModelEval(llm)
-    de_judge = LangchainModelEval(loader.load_vsegpt("openai/gpt-3.5-turbo",
+    de_judge = LangchainModelEval(loader.load_vsegpt("meta-llama/llama-3-70b-instruct", #"openai/gpt-3.5-turbo",
                                                             temperature=0.3))
     str2vul = {f"RTVulnerability.{k}":v for k, v in RTVulnerability._member_map_.items()}
 
@@ -47,7 +47,7 @@ def do_bench(debug_testing=False):
         entry = dict(entry)
         lang = entry["lang"]
         entry_id = entry["id"]
-        attack_type = entry["type_general"]
+        attack_type = entry["type_general"].replace("Jailbrake", "Jailbreak")
         text_attack = entry["text"]
         text_input = entry["user_input"]
         judge_input = entry["judge_input"]
@@ -55,7 +55,7 @@ def do_bench(debug_testing=False):
         vul = str2vul[str_vul]
         output_entry = None
         for i_output_entry in output_json:
-            if float(i_output_entry["id"]) == float(entry_id):
+            if i_output_entry["id"] == entry_id:
                 output_entry = i_output_entry
                 break
         assert output_entry is not None
@@ -68,8 +68,8 @@ def do_bench(debug_testing=False):
         ### FIND METRICS
 
         prompt = text_attack
-        if text_attack.strip() != "":
-            if text_attack.find("{input}") != -1 and isinstance(text_input, str):
+        if text_attack.strip() != "" and isinstance(text_input, str):
+            if text_attack.find("{input}") != -1:
                 prompt += "\n" + text_input
             else:
                 prompt = text_attack.replace("{input}", " " + text_input)
@@ -106,6 +106,7 @@ def do_bench(debug_testing=False):
                         "score": score,
                         "reason": reason,
                         "agent_name": agent_name,
+                        "benchmark_version": "1.0.0",
                         }
         all_results.append(result_dict)
         # print(result[0])
