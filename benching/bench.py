@@ -56,7 +56,11 @@ for internal_index, entry in df.iterrows():
     judge_input = entry["judge_input"]
     str_vul = entry["vul_deepeval"]
     vul = str2vul[str_vul]
-    output_entry = output_json[entry_id]
+    output_entry = None
+    for i_output_entry in output_json:
+        if output_json["id"] == entry_id:
+            output_entry = output_json[entry_id]
+    assert output_entry is not None
     output = output_entry["output"]
     agent_name = output_entry["agent_name"]
     ############################
