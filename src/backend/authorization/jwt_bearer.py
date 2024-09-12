@@ -1,9 +1,7 @@
 from fastapi import HTTPException, Request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import jwt
-
-SECRET_KEY = "12345"
-ALGORITHM = "HS256"
+from settings import settings
 
 
 class JWTBearer(HTTPBearer):
@@ -31,7 +29,11 @@ class JWTBearer(HTTPBearer):
         isTokenValid: bool = False
 
         try:
-            payload = jwt.decode(jwtoken, SECRET_KEY, algorithms=[ALGORITHM])
+            payload = jwt.decode(
+                jwtoken,
+                settings.jwt_settings.secret_key,
+                algorithms=[settings.jwt_settings.algorithm],
+            )
         except Exception:
             payload = None
 

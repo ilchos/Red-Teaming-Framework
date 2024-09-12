@@ -3,16 +3,14 @@ from pydantic import BaseModel
 
 # Схема для создания пользователя
 class UserCreate(BaseModel):
-    email: str
+    username: str
     password: str
-    full_name: str
 
 
 # Схема для вывода информации о пользователе
 class UserOut(BaseModel):
     id: int
-    email: str
-    full_name: str
+    username: str
 
 
 # Схема для аутентификации
@@ -23,7 +21,7 @@ class Token(BaseModel):
 
 # Схема для ввода данных аутентификации
 class Login(BaseModel):
-    email: str
+    username: str
     password: str
 
 

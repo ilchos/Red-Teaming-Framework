@@ -2,35 +2,41 @@ import gradio as gr
 import pandas as pd
 from backend_client import BackendClient
 from leaderboard_utils import get_categories_mapping, update_categories, update_table
-from submit_utils import send_file_to_backend
+
+leaderboard_df_raw, high2low, low2high, leaderboard_table, leaderboard_table_raw = (
+    None,
+    None,
+    None,
+    None,
+    None,
+)
+
+
+def initialize_leaderboard(backend_client):
+    leaderboard_competitors = backend_client.fetch_leaderboard_competitors()
+    leaderboard_df_raw = pd.DataFrame(leaderboard_competitors).sort_values(
+        "score", ascending=False
+    )
+    high2low, low2high = get_categories_mapping(leaderboard_df_raw)
+    return leaderboard_df_raw, high2low, low2high
 
 
 def create_interface():
+    # TODO: move url to env
     backend_client = BackendClient("http://backend:8000")
-
-    leaderboard_competitors = backend_client.fetch_leaderboard_competitors()
-    leaderboard_df_raw = pd.DataFrame(leaderboard_competitors).sort_values(
-        "hit_rate", ascending=True
-    )
-    high2mid, mid2low, low2high = get_categories_mapping(leaderboard_df_raw)
+    leaderboard_df_raw, high2low, low2high = initialize_leaderboard(backend_client)
 
     with gr.Blocks() as iface:
+
         with gr.Tabs():
             with gr.TabItem("Leaderboard"):
                 with gr.Blocks():
                     gr.Markdown("# LLM safety leaderboard")
                     with gr.Row():
                         high_level_categories = gr.CheckboxGroup(
-                            choices=list(high2mid.keys()),
-                            value=list(high2mid.keys()),
+                            choices=list(high2low.keys()),
+                            value=list(high2low.keys()),
                             label="Select High Level Attack Category",
-                            interactive=True,
-                        )
-                    with gr.Row():
-                        mid_level_categories = gr.CheckboxGroup(
-                            choices=list(mid2low.keys()),
-                            value=list(mid2low.keys()),
-                            label="Select Mid Level Attack Category",
                             interactive=True,
                         )
                     with gr.Row():
@@ -42,32 +48,8 @@ def create_interface():
                         )
 
                     high_level_categories.change(
-                        lambda hlc, mlc: update_categories(
-                            hlc,
-                            mlc,
-                            "high_level_category",
-                            high2mid,
-                            mid2low,
-                        ),
-                        inputs=[
-                            high_level_categories,
-                            mid_level_categories,
-                        ],
-                        outputs=[mid_level_categories, low_level_categories],
-                        queue=True,
-                    )
-                    mid_level_categories.change(
-                        lambda hlc, mlc: update_categories(
-                            hlc,
-                            mlc,
-                            "mid_level_category",
-                            high2mid,
-                            mid2low,
-                        ),
-                        inputs=[
-                            high_level_categories,
-                            mid_level_categories,
-                        ],
+                        lambda hlc: update_categories(hlc, high2low),
+                        inputs=[high_level_categories],
                         outputs=low_level_categories,
                         queue=True,
                     )
@@ -79,17 +61,15 @@ def create_interface():
                         )
                         shown_columns = gr.CheckboxGroup(
                             choices=[
-                                "passed",
-                                "total",
-                                "hit_rate",
+                                "score",
                                 "low_level_category",
-                                "mid_level_category",
                                 "high_level_category",
+                                "lang",
+                                "benchmark_version",
                             ],
                             value=[
-                                "hit_rate",
+                                "score",
                                 "high_level_category",
-                                "mid_level_category",
                                 "low_level_category",
                             ],
                             label="Select columns to show",
@@ -120,7 +100,6 @@ def create_interface():
                             manually_tested_visibility,
                             search_bar,
                             high_level_categories,
-                            mid_level_categories,
                             low_level_categories,
                         ],
                         leaderboard_table,
@@ -130,7 +109,6 @@ def create_interface():
                         shown_columns,
                         manually_tested_visibility,
                         high_level_categories,
-                        mid_level_categories,
                         low_level_categories,
                     ]:
                         selector.change(
@@ -141,7 +119,6 @@ def create_interface():
                                 manually_tested_visibility,
                                 search_bar,
                                 high_level_categories,
-                                mid_level_categories,
                                 low_level_categories,
                             ],
                             leaderboard_table,
@@ -156,12 +133,38 @@ def create_interface():
                     with gr.Row():
                         with gr.Accordion("Manual testing"):
                             gr.Interface(
-                                fn=send_file_to_backend,
-                                inputs=gr.File(label="Загрузите файл"),
+                                fn=backend_client.send_file_to_backend,
+                                inputs=gr.File(
+                                    label="Загрузите файл",
+                                    type="binary",
+                                ),
                                 outputs="text",
                                 description="Загрузите файл и посмотрите результат.",
                             )
 
+        def on_load(shown_columns):
+            leaderboard_df_raw, high2low, low2high = initialize_leaderboard(
+                backend_client
+            )
+            result = (
+                gr.update(choices=list(high2low.keys())),
+                gr.update(choices=list(low2high.keys())),
+                gr.update(value=leaderboard_df_raw),
+                gr.update(value=leaderboard_df_raw[["model_name"] + shown_columns]),
+            )
+
+            return result
+
+        iface.load(
+            on_load,
+            inputs=[shown_columns],
+            outputs=[
+                high_level_categories,
+                low_level_categories,
+                leaderboard_table_raw,
+                leaderboard_table,
+            ],
+        )
     return iface
 
 

@@ -1,5 +1,6 @@
 import psycopg
 from fastapi import Depends
+from loguru import logger
 from psycopg.rows import dict_row
 from settings import PostgresSettings, Settings
 
@@ -31,30 +32,49 @@ class PostgresClient:
         query = """
             SELECT
                 model_name,
-                total,
-                passed,
-                hit_rate,
-                manually_tested,
+                score,
                 high_level_category,
-                mid_level_category,
-                low_level_category
+                low_level_category,
+                lang,
+                manually_tested,
+                benchmark_version
             FROM leaderboard_competitors
         """
         return self.execute_query(query)
 
-    def select_users(self, email: str):
-        query = "SELECT * FROM users WHERE email = %s"
-        params = (email,)
+    def select_users(self, username: str):
+        query = "SELECT * FROM users WHERE username = %s"
+        params = (username,)
         result = self.execute_query(query, params)
         return result
 
     def insert_user(self, user, hashed_password):
-        query = "INSERT INTO users (email, password_hash, full_name) VALUES \
-            (%s, %s, %s) RETURNING id"
-        params = (user.email, hashed_password, user.full_name)
+        query = "INSERT INTO users (username, password_hash) VALUES \
+            (%s, %s) RETURNING id"
+        params = (user.username, hashed_password)
         user_id = self.execute_query(query, params)[0]["id"]
         print(f"USER_ID: {user_id}")
         return user_id
+
+    def insert_competitors(self, competitors):
+        if not self.conn:
+            self.connect()
+        try:
+            for data in competitors:
+                data_dict = data.model_dump()
+
+                columns = ", ".join(data_dict.keys())
+                placeholders = ", ".join(["%s"] * len(data_dict))
+                query = f"INSERT INTO leaderboard_competitors ({columns}) VALUES ({placeholders})"
+
+                with self.conn.cursor() as cur:
+                    cur.execute(query, list(data_dict.values()))
+
+        except psycopg.errors.UniqueViolation as exc:
+            logger.info(f"Exception: {exc}")
+            raise exc
+
+        self.conn.commit()
 
     def __enter__(self):
         self.connect()

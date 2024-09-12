@@ -7,7 +7,7 @@ services:
     environment:
       - POSTGRES_USER=$PG_USER
       - POSTGRES_PASSWORD=$PG_PASSWORD
-      - POSTGRES_DB=$PG_DATABASE
+      - POSTGRES_DB=$PG_DBNAME
     ports:
       - $PG_PORT:$PG_PORT
     networks:
@@ -29,6 +29,8 @@ services:
     build: 
       dockerfile: ./docker/frontend.Dockerfile
     container_name: frontend
+    env_file:
+      - .env
     ports:
       - "7860:7860"
     depends_on:

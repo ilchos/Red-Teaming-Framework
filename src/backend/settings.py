@@ -22,10 +22,27 @@ class PostgresSettings(BaseSettings):
     password: str = "postgres"
 
 
+class BackendAuth(BaseSettings):
+    model_config = SettingsConfigDict(env_prefix="BACKEND_")
+
+    username: str
+    password: str
+
+
+class JWTSettings(BaseSettings):
+    model_config = SettingsConfigDict(env_prefix="JWT_")
+
+    secret_key: str
+    algorithm: str
+    access_token_expire_minutes: int
+
+
 class Settings(BaseSettings):
 
     postgres_settings: PostgresSettings = PostgresSettings()
     logger_settings: LoggerSettings = LoggerSettings()
+    backend_auth: BackendAuth = BackendAuth()
+    jwt_settings: JWTSettings = JWTSettings()
 
     vse_gpt_url: str = "https://api.vsegpt.ru/v1/chat/completions"
     vse_gpt_api_key: str

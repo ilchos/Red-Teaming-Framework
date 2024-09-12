@@ -1,16 +1,5 @@
 FROM python:3.11.9 as builder
 
-# костыль чтобы полелить установку зависимостей связанные с garak.
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-
-# Добавляем Rust и Cargo в PATH
-ENV PATH="/root/.cargo/bin:${PATH}"
-
 ENV PATH="/root/.local/bin:$PATH" \
     VIRTUAL_ENV=/app/.venv \
     PYTHONUNBUFFERED=1 \
@@ -36,5 +25,3 @@ RUN mkdir logs
 COPY src/backend src/backend
 
 EXPOSE 8000
-
-# CMD ["uvicorn", "src/backend:app", "--host", "0.0.0.0", "--port", "8000"]
