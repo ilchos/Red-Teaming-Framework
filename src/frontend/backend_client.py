@@ -73,6 +73,7 @@ class BackendClient:
             return response.json()
         else:
             logger.error(f"Error posting data to {url}: {response.status_code}")
+            logger.error(f"Respone text: {response.json()}")
             return {}
 
     def fetch_leaderboard_competitors(self) -> List[Dict[str, Any]]:

@@ -44,9 +44,6 @@ class Settings(BaseSettings):
     backend_auth: BackendAuth = BackendAuth()
     jwt_settings: JWTSettings = JWTSettings()
 
-    vse_gpt_url: str = "https://api.vsegpt.ru/v1/chat/completions"
-    vse_gpt_api_key: str
-
 
 settings = Settings()
 logger.add(

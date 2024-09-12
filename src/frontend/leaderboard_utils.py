@@ -5,6 +5,45 @@ import pandas as pd
 from loguru import logger
 
 
+def calculate_leaderboard(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Вычисляет лидерборд на основе данных в DataFrame.
+
+    Args:
+        df (pd.DataFrame): Исходный DataFrame с данными.
+
+    Returns:
+        pd.DataFrame: DataFrame с вычисленным лидербордом.
+    """
+    if df.shape[0] == 0:
+        logger.warning(
+            "No data to calculate leaderboard. Returning original DataFrame."
+        )
+        return df
+
+    result = pd.DataFrame()
+    categories = df["vul_deepeval"].unique()
+
+    for category in categories:
+        tmp = df[df["vul_deepeval"] == category]
+        tmp_2 = (
+            tmp.groupby("agent_name")["score"]
+            .mean()
+            .reset_index(name=category)
+            .sort_values("agent_name")
+        )
+
+        if result.shape[0] == 0:
+            result = pd.concat([result, tmp_2], axis=1)
+        else:
+            result = pd.concat([result, tmp_2[category]], axis=1)
+
+    # Переупорядочиваем столбцы, чтобы 'model_name' был первым
+    result = result[["agent_name"] + [c for c in result.columns if c != "agent_name"]]
+
+    return result
+
+
 def filter_dataframe(
     df: pd.DataFrame,
     show_manually_tested: bool,
@@ -32,9 +71,9 @@ def filter_dataframe(
         filtered_df = df
 
     mask = (
-        filtered_df["high_level_category"].isin(high_level_categories)
-        & filtered_df["low_level_category"].isin(low_level_categories)
-        & filtered_df["model_name"].str.contains(query, case=False, na=False)
+        filtered_df["type_general"].isin(high_level_categories)
+        & filtered_df["vul_deepeval"].isin(low_level_categories)
+        & filtered_df["agent_name"].str.contains(query, case=False, na=False)
     )
 
     return filtered_df[mask]
@@ -42,7 +81,6 @@ def filter_dataframe(
 
 def update_table(
     df: pd.DataFrame,
-    columns: List[str],
     show_manually_tested: bool,
     query: str,
     high_level_categories: List[str],
@@ -53,7 +91,6 @@ def update_table(
 
     Args:
         df (pd.DataFrame): Исходный DataFrame.
-        columns (List[str]): Список столбцов для отображения.
         show_manually_tested (bool): Флаг, указывающий, показывать ли
                                     данные, прошедшие ручное тестирование.
         query (str): Строка запроса для фильтрации по имени модели.
@@ -70,7 +107,9 @@ def update_table(
         high_level_categories,
         low_level_categories,
     )
-    result = filtered_df[["model_name"] + columns]
+
+    result = calculate_leaderboard(filtered_df)
+
     return result
 
 
@@ -90,12 +129,8 @@ def get_categories_mapping(
             - low2high: Словарь, где ключи - категории низкого уровня,
                         значения - списки категорий высокого уровня.
     """
-    high2low = (
-        df.groupby("high_level_category")["low_level_category"].apply(list).to_dict()
-    )
-    low2high = (
-        df.groupby("low_level_category")["high_level_category"].apply(list).to_dict()
-    )
+    high2low = df.groupby("type_general")["vul_deepeval"].apply(list).to_dict()
+    low2high = df.groupby("vul_deepeval")["type_general"].apply(list).to_dict()
     return high2low, low2high
 
 

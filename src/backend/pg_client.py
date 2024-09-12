@@ -27,10 +27,10 @@ class PostgresClient:
     def select_competitors(self):
         query = """
             SELECT
-                model_name,
+                agent_name,
                 score,
-                high_level_category,
-                low_level_category,
+                vul_deepeval,
+                type_general,
                 lang,
                 manually_tested,
                 benchmark_version

@@ -24,6 +24,8 @@ services:
     networks:
       - app-network
     command: poetry run python3 src/backend/main.py
+    depends_on: 
+      - postgres
 
   frontend:
     build: 
@@ -35,9 +37,9 @@ services:
       - "7860:7860"
     depends_on:
       - backend
+    command: poetry run python3 src/frontend/main.py
     networks:
       - app-network
-    command: poetry run python3 src/frontend/main.py
 
 networks:
   app-network:

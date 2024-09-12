@@ -9,10 +9,12 @@ class LeaderboardCompetitorsResponse(BaseModel):
 
 
 class UploadFileRequest(BaseModel):
-    model_name: str
+    id: float
+    agent_name: str
     score: float
-    low_level_category: str
-    high_level_category: str
+    vul_deepeval: str
+    type_general: str
     lang: str
-    manually_tested: bool
-    benchmark_version: str
+    manually_tested: bool = True
+    benchmark_version: str = "1.0"
+    reason: str

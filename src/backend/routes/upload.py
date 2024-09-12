@@ -18,7 +18,7 @@ async def upload_jsonlist(
     for index, data in enumerate(data_list):
         try:
             # Валидация данных по схеме
-            validated_data = UploadFileRequest(**data.dict())
+            validated_data = UploadFileRequest(**data.model_dump())
 
             # Если валидация прошла успешно, добавляем данные в список
             validated_data_list.append(validated_data)
