@@ -11,6 +11,12 @@
 > 
 > (Are your agent ready for production? Let's see: just BOMB your model)
 
+Curretly our leaderboard deployed on this adress:
+
+http://84.201.151.208:7860/
+
+You can upload your results here!
+
 ## 🚀 Getting started
 
 Follow this [link](benching/benchmark.ipynb) to access a step-by-step guide on how to check your AI agent!
