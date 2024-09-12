@@ -6,8 +6,8 @@ def sheet_to_df(url):
     sheet_id = url.split('/')[5]
     
     # Construct the CSV export URL
-    csv_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv"
-    
+    csv_url = url  # f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv"
+    #print(csv_url )
     # Read the CSV into a pandas DataFrame
     df = pd.read_csv(csv_url)
     
@@ -16,8 +16,8 @@ def sheet_to_df(url):
 
 def sheet_dataset_prepare(df_name="aws/en"):
     df2url = {
-        "aws/en": "https://docs.google.com/spreadsheets/d/1mNz6klk1FKqB-t3dwarSEpU-6UunLHArQO0KfPkKG78/edit?gid=1956418441#gid=1956418441",
-        "aws/ru": "https://docs.google.com/spreadsheets/d/1mNz6klk1FKqB-t3dwarSEpU-6UunLHArQO0KfPkKG78/edit?gid=1259270336#gid=1259270336",
+        "aws/en": "https://docs.google.com/spreadsheets/d/1mNz6klk1FKqB-t3dwarSEpU-6UunLHArQO0KfPkKG78/export?format=csv&gid=1956418441#gid=1956418441",
+        "aws/ru": "https://docs.google.com/spreadsheets/d/1mNz6klk1FKqB-t3dwarSEpU-6UunLHArQO0KfPkKG78/export?format=csv&gid=1259270336#gid=1259270336",
     }
     variuos_columns = ['id', 'text', 'lang', 'type_general', 'judge_input', 'vul_deepeval']
 
@@ -29,3 +29,5 @@ def sheet_dataset_prepare(df_name="aws/en"):
 # Usage
 #url = "https://docs.google.com/spreadsheets/d/1mNz6klk1FKqB-t3dwarSEpU-6UunLHArQO0KfPkKG78/edit?gid=1956418441#gid=1956418441"
 #df = sheet_to_df(url)
+if __name__ == '__main__':
+    print(sheet_dataset_prepare("aws/ru"))
