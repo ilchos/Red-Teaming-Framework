@@ -22,8 +22,6 @@ from utils.output import get_model_title
 from models import LangchainModelEval
 
 api_keys = load_api_keys()
-os.environ["LANGCHAIN_API_KEY"] = api_keys["langchain"]["key"]
-os.environ["LANGCHAIN_PROJECT"] = "default"
 
 loader = LLMLoader()
 llm = loader.load_vsegpt("mistralai/mistral-7b-instruct", temperature=0.3)
