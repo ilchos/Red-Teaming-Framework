@@ -50,7 +50,7 @@ str2att = {
 
 for entry in df.iterrows():
     if entry["text"].strip() == "":
-        print("skipping empty entry id =",entry["id"])
+        print("skipping empty entry id =", entry["id"])
         continue
     lang = entry["lang"]
     ############################
