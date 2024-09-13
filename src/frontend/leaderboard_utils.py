@@ -41,7 +41,7 @@ def calculate_leaderboard(df: pd.DataFrame) -> pd.DataFrame:
     # Переупорядочиваем столбцы, чтобы 'model_name' был первым
     result = result[["agent_name"] + [c for c in result.columns if c != "agent_name"]]
 
-    return result
+    return result.round(2)
 
 
 def filter_dataframe(
