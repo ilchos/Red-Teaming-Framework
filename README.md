@@ -11,19 +11,27 @@
 > 
 > (Are your agent ready for production? Let's see: just BOMB your model)
 
+Curretly our leaderboard deployed on this adress:
+
+http://84.201.151.208:7860/
+
+You can upload your results here!
+
 ## 🚀 Getting started
 
-Follow this [link](https://github.com/ilchos/Red-Teaming-Framework/blob/master/benching/benchmark_outs.ipynb) to access a step-by-step guide on how to check your AI agent.
+Follow this [link](benching/benchmark.ipynb) to access a step-by-step guide on how to check your AI agent!
 
 ## Framework contents
 
 ### 📑 Benchark datasets
 
-40 high-quality entries for all-wide attacks
+30 high-quality entries for all-wide attacks
 
 1 prompt of our bench dataset contains 2 text parts:
 - model-breaking text part (jailbrake, encoding & etc)
 - innapropriate text part (harmful topics & etc)
+
+our benchmark currently supports english and russian LLM agents (dataset per language).
 
 ### 🔬 Testing system
 
@@ -31,13 +39,16 @@ We use DeepEval harm metric system
 
 Testing procedure:
 
-- Connecting YOUR agent for testing using OpenAI-like chatbot API
-- Connecting gpt-4o Judge model for metrics
-- Loading our benchmark prompt dataset
-- Evaluating process & storing the results
-- Now you can see your model's vulnerability testing results!
-  - You can compare your agent's results to another models results
-- (optional) Uploading your agent's results to public leaderboard
+- Connect YOUR agent for testing
+    - use OpenAI-like chatbot API
+    - OR define your own generate function
+- Connect Judge model (API) for metrics
+- Load our benchmark prompt dataset
+- Evaluate process & store the results
+- Uploading your agent's results to public leaderboard
+    - Now you can see your model's vulnerability testing results!
+    - You can compare your agent's results to another models results
+
 
 ---
 
