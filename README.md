@@ -23,7 +23,7 @@ Follow this [link](benching/benchmark.ipynb) to access a step-by-step guide on h
 
 ## Framework contents
 
-### 📑 Benchark datasets
+### 📑 Benchmark datasets
 
 30 high-quality entries for all-wide attacks
 
