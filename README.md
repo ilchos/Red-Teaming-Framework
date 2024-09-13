@@ -8,7 +8,7 @@
 </p>
 
 > 🔥 bombs chatbot-like AI agents
-> 
+>
 > (Are your agent ready for production? Let's see: just BOMB your model)
 
 Curretly our leaderboard deployed on this adress:
@@ -23,7 +23,7 @@ Follow this [link](benching/benchmark.ipynb) to access a step-by-step guide on h
 
 ## Framework contents
 
-### 📑 Benchark datasets
+### 📑 Benchmark datasets
 
 30 high-quality entries for all-wide attacks
 
