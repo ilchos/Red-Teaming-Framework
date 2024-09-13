@@ -1,4 +1,4 @@
 __pycache__
 .venv
 poetry.lock
-outputs
+outputs/v*
