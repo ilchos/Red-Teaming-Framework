@@ -1,17 +1,26 @@
-# garak vsegpt example
-* вставить нужные значения в rest_settings_template.json
-    * YOUR_VSE_GPT_KEY - ключ vsegpt
-    * YOUR_MODEL_NAME - название модели доступной с vsegpt. Например, "openai/gpt-3.5-turbo-0125"
-    * <как надо запарсить выход vsegpt для того чтобы получить текст>. Не знаю для всех ли моделей выход одинаковый, но для модели выше вот такой JSONPath: "$.choices[0].message.content"
-* Запустить garak
-    ```bash
-        garak \
-            --model_type rest \
-            --generator_option_file rest_settings_template.json \
-            --probes dan.Dan_6_0 \
-            --report_prefix /Users/kbduvakin/Red-Teaming-Framework/garak_success \
-            --verbose \
-            --generations 1
-    ```
+# How to?
 
-[garak documentation reference](https://reference.garak.ai/en/latest/garak.generators.rest.html)
+* Create .env file
+```bash
+# BACKEND SETTINGS
+### POSTGRES SETTINGS
+export PG_HOST=
+export PG_PORT=
+export PG_DBNAME=
+export PG_USER=
+export PG_PASSWORD=
+
+### JWT SETTINGS
+export JWT_SECRET_KEY=
+export JWT_ALGORITHM=
+export JWT_ACCESS_TOKEN_EXPIRE_MINUTES=
+
+# FRONTEND SETTINGS
+export BACKEND_USERNAME=
+export BACKEND_PASSWORD=
+export BACKEND_URL=
+```
+* Create docker containers for frontend and backend(see docker-compose.yaml)
+```bash
+docker compose up
+```
