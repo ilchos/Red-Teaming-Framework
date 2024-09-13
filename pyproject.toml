@@ -23,10 +23,13 @@ langchain = "0.2.1"
 pandas = "^2.2.2"
 langchain-community = "0.2.1"
 yandex-chain = "^0.0.9"
+gigachat = "^0.1.35"
+
 
 [tool.poetry.group.v3.dependencies]
 langchain = "0.2.1"
 pandas = "^2.2.2"
 langchain-community = "0.2.1"
 yandex-chain = "^0.0.9"
+gigachat = "^0.1.35"
 deepeval = "^1.1.7"
