@@ -24,3 +24,6 @@ export BACKEND_URL=
 ```bash
 docker compose up
 ```
+
+# See our WebService deployed in Yandex Cloud
+[AI Safety Leaderboard](http://84.201.151.208:7860/)
