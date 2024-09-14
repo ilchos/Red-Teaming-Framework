@@ -15,7 +15,11 @@ Curretly our leaderboard deployed on this adress:
 
 http://84.201.151.208:7860/
 
-You can upload your results here!
+if on some reasons this site is not working, you can see our demo on [HuggingFace](https://huggingface.co/spaces/3ndetz/AwesomeSafetyLeaderboard)
+
+(but on HF there is only demo without fully-separated backend and it may be not synchronized with the main deployment)
+
+You can also upload your results here!
 
 ## 🚀 Getting started
 
