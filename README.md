@@ -35,6 +35,9 @@ Follow this [link](benching/benchmark.ipynb) to access a step-by-step guide on h
 
 1 prompt of our bench dataset contains 2 text parts:
 - model-breaking text part (jailbrake, encoding & etc)
+  - Jailbrakes were mostly taken from [this article](http://arxiv.org/abs/2308.03825) and reddit forums
+  - Suffix attacks were taken [here (uninterpretable)](http://arxiv.org/abs/2307.15043) and [here (interpretable)](http://arxiv.org/abs/2402.16006)
+  - Encodings were generated ourselves by the example of Garak
 - innapropriate text part (harmful topics & etc)
 
 our benchmark currently supports english and russian LLM agents (dataset per language).
