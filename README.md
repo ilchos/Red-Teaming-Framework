@@ -53,4 +53,3 @@ Testing procedure:
 ---
 
 ‼️ We hope you WILL NOT train your model on our benchmark dataset. It's only for evaluating. Thanks!
-
