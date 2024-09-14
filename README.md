@@ -29,7 +29,7 @@ Follow this [link](benching/benchmark.ipynb) to access a step-by-step guide on h
 
 ### 📑 Benchmark datasets
 
-30 high-quality entries for all-wide attacks
+30 high-quality entries for all-wide attacks. The dataset is available [here](https://docs.google.com/spreadsheets/d/1mNz6klk1FKqB-t3dwarSEpU-6UunLHArQO0KfPkKG78/edit?usp=sharing).
 
 1 prompt of our bench dataset contains 2 text parts:
 - model-breaking text part (jailbrake, encoding & etc)
