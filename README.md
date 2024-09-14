@@ -11,9 +11,11 @@
 >
 > (Are your agent ready for production? Let's see: just BOMB your model)
 
-Curretly our leaderboard deployed on this adress:
+Curretly our leaderboard deployed on this address:
 
-http://84.201.151.208:7860/
+[http://84.201.151.208:7860/](http://84.201.151.208:7860/).
+
+Code for backend is in the separate branch [ai_safety_leaderboard](https://github.com/ilchos/Red-Teaming-Framework/tree/ai_safety_leaderboard)
 
 if on some reasons this site is not working, you can see our demo on [HuggingFace](https://huggingface.co/spaces/3ndetz/AwesomeSafetyLeaderboard)
 
