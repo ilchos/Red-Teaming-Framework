@@ -7,9 +7,17 @@
     <h1 align="center">Awesome Red-Teaming framework</h1>
 </p>
 
+## Introduction
 > 🔥 bombs chatbot-like AI agents
 >
 > (Are your agent ready for production? Let's see: just BOMB your model)
+
+Red Teaming Framework aims to test LLMs for vulnerabilities and provide a leaderbord that reflects models' performance. It has a dataset of prompts and evaluation pipeline.
+
+This allows users to test the model of their choice for vulnerabilities and compare it to other models. Thus they can pick the model that suits their purposes the best.
+
+The evaluation pipeline is implemented via [deepeval](https://docs.confident-ai.com/) python library. The backend is written with [gradio](https://github.com/gradio-app/gradio) and [fastapi](https://github.com/fastapi/fastapi).
+
 
 Curretly our leaderboard deployed on this address:
 
