@@ -2,3 +2,5 @@ __pycache__
 .venv
 poetry.lock
 outputs/v*
+outputs/agent_outputs.json
+outputs/agent_results.json
